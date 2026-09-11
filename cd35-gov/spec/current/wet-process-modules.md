@@ -5,14 +5,17 @@ project: CD35
 document_type: spec-topic
 status: current
 maturity: concept
-last_promoted_in: "0.1.0"
-topic_revision: 1
+last_promoted_in: "0.2.0"
+topic_revision: 2
 last_updated: 2026-09-11
 owners:
   - unassigned
 depends_on:
   - system-architecture
+  - module-platform
   - film-transport
+  - thermal-control
+  - fluid-handling
 supersedes: null
 ---
 
@@ -20,59 +23,69 @@ supersedes: null
 
 ## Purpose
 
-Define the interchangeable bath modules that contain processing chemistry, circulation, sensing, drainage, and the local film path.
+Define the standardized `WBM` Wet Bath Module: the chemistry vessel, local wet film path, and receiving interfaces for transport, thermal, and fluid-service systems.
 
 ## Normative requirements
 
-- **WET-001** — Wet-process stages SHALL use a standardized replaceable module architecture wherever stage-specific chemistry does not make that impractical.
-- **WET-002** — A wet module SHALL provide a defined mechanical docking interface to the processor chassis.
-- **WET-003** — A wet module SHALL provide a controlled means to drain or extract its working solution without tipping or removing the full machine.
-- **WET-004** — Routine chemistry replacement SHALL be possible without dismantling unrelated processor assemblies.
-- **WET-005** — Each chemistry-bearing module SHALL provide temperature measurement appropriate to its process requirement.
-- **WET-006** — Modules requiring active heating SHALL provide a standardized heater/control interface or contain a replaceable local heater subsystem.
-- **WET-007** — Modules requiring circulation SHALL provide a serviceable circulation path and pump interface.
-- **WET-008** — Chemical-contact materials SHALL be selected and validated for compatibility with the chemistry assigned to that module.
-- **WET-009** — Fluid drain and service connections SHOULD minimize uncontrolled spills and accidental cross-connection.
-- **WET-010** — The design SHOULD permit rapid exchange of a complete wet module for cleaning, chemistry change, troubleshooting, or service.
-- **WET-011** — The system SHOULD be capable of identifying the installed module or its assigned process role so incorrect stage placement can be detected.
+- **WET-001** — Wet-process stages SHALL use a standardized external `WBM` interface wherever stage-specific chemistry does not make that impractical.
+- **WET-002** — A `WBM` SHALL provide defined mechanical docking datums and retention features to the processor platform.
+- **WET-003** — A `WBM` SHALL expose fluid ports according to `fluid-handling.md` rather than relying on permanently attached cross-machine hoses.
+- **WET-004** — A temperature-controlled `WBM` SHALL provide the defined receiving interface for replaceable thermal sensing/heating hardware.
+- **WET-005** — Wet film guides, rollers, racks, or sprockets SHALL be removable for cleaning or replacement without discarding the bath vessel where practical.
+- **WET-006** — A `WBM` intended for routine exchange SHALL be removable after isolation/disconnection without cutting tubing, desoldering wiring, or dismantling adjacent stages.
+- **WET-007** — Pumps, motors, heater electronics, and other likely service-failure components SHOULD remain outside the bath vessel unless integration provides a documented process or safety advantage.
+- **WET-008** — Wetted materials SHALL be validated for compatibility with the assigned process chemistry.
+- **WET-009** — The vessel SHALL provide controlled complete or near-complete draining through the defined low-point fluid interface.
+- **WET-010** — Internal wetted surfaces SHALL avoid unnecessary crevices, inaccessible dead volumes, and service geometries that make routine cleaning impractical.
+- **WET-011** — External module identity SHALL indicate module type, interface revision, and assigned process role.
+- **WET-012** — Standardized external interfaces SHALL NOT require every stage to have identical internal volume, film-path length, or thermal hardware; process-specific internal geometry MAY vary while preserving the service interface.
+- **WET-013** — Incorrect placement of chemically incompatible or interface-incompatible wet modules SHOULD be detectable before processing begins.
+- **WET-014** — Wet module design SHALL comply with `PBR-020` through `PBR-026`.
 
 ## Current design direction
 
-A common wet-module standard is preferred over unique developer, bleach, fixer, and rinse tank hardware. Differences should be configuration-driven where possible.
-
-Candidate module features:
+The preferred `WBM` is intentionally as passive as practical:
 
 ```text
-┌─────────────────────────────┐
-│ standardized wet module     │
-│                             │
-│ removable transport rack    │
-│ working bath                │
-│ temperature sensor          │
-│ level sensing               │
-│ circulation / filtration    │
-│ heater where required       │
-│ drain / service coupling    │
-│ replenishment connection    │
-│ module identity             │
-└─────────────────────────────┘
+┌──────────────────────────────┐
+│ WBM wet bath module          │
+│                              │
+│ removable wet transport rack │
+│ chemistry vessel             │
+│ fluid port block             │
+│ thermal well/interface       │
+│ low-point drain geometry     │
+│ identity / stage marking     │
+└──────────────────────────────┘
+       ↑          ↑         ↑
+      TDM        TSM       FSM
+   dry drive   thermal   fluid service
 ```
 
-A simple tap may be acceptable for an early prototype. A keyed dry-break or similarly spill-resistant coupling is the preferred production direction if testing supports it.
+This keeps the high-maintenance motor, pump, heater/sensor service hardware out of the vessel where feasible. The bath becomes cheaper to swap, clean, or replace.
 
-## Interfaces
+## Standardization boundary
 
-- Chassis: mounting, alignment, service access.
-- Transport: removable rack/guide geometry and drive coupling.
-- Controls: temperature, level, identity, pump/heater control.
-- Fluid service: fill, drain, replenishment, overflow where required.
+The goal is **common external interfaces**, not artificially identical process tanks. Developer, bleach, fixer, wash, and rinse may ultimately require different immersed path lengths, volumes, agitation, overflow behavior, or thermal capability. Those differences should be implemented behind a common chassis/service interface when practical.
+
+## Validation
+
+Wet-module validation should include:
+
+- leak and drain testing;
+- chemical compatibility;
+- repeated docking/removal;
+- transport-rack alignment after replacement;
+- cleaning access;
+- dead-volume assessment;
+- module misplacement detection;
+- thermal and fluid interface repeatability.
 
 ## Open questions
 
-- Working volume per module.
-- Common module dimensions.
-- Integrated versus external circulation pump.
-- Whether wash modules should use the same physical cartridge standard as chemistry modules.
-- Replenishment strategy and replenishment-rate measurement.
-- Filter type and service interval.
-- Best dry-break coupling family for chemistry compatibility and cost.
+- Common external module envelope and datum system.
+- Minimum practical working volume.
+- Internal film-path cassette/rack standard.
+- Whether wash/rinse stages use the identical WBM shell or a simplified compatible variant.
+- Material and manufacturing process for prototype versus production bath vessels.
+- Module identity implementation.
