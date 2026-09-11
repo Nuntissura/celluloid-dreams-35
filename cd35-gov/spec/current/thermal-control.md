@@ -13,8 +13,6 @@ owners:
 depends_on:
   - module-platform
   - controls-and-software
-  - wet-process-modules
-  - fluid-handling
 supersedes: null
 ---
 
@@ -131,6 +129,13 @@ This is a candidate implementation, not a frozen fan/radiator requirement. Envir
 ## Sensor direction
 
 Industrial RTD sensing such as PT100/PT1000-class probes or an equivalent verified technology remains the preferred candidate because replaceable probes, documented tolerances, and standard instrumentation are widely available. Exact sensor class, wiring method, and connector remain TBD.
+
+## Interfaces
+
+- `module-platform` defines the TSM service boundary and commonization rules.
+- `wet-process-modules` provides the WBM receiving thermal surface/interface.
+- `fluid-handling` provides chemistry circulation used to distribute thermal energy.
+- `controls-and-software` commands thermal state and handles faults/interlocks.
 
 ## Prototype sequence
 
