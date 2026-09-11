@@ -12,7 +12,6 @@ owners:
   - unassigned
 depends_on:
   - module-platform
-  - controls-and-software
 supersedes: null
 ---
 
