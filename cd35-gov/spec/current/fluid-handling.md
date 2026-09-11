@@ -5,8 +5,8 @@ project: CD35
 document_type: spec-topic
 status: current
 maturity: concept
-last_promoted_in: "0.2.0"
-topic_revision: 1
+last_promoted_in: "0.3.0"
+topic_revision: 2
 last_updated: 2026-09-11
 owners:
   - unassigned
@@ -20,7 +20,7 @@ supersedes: null
 
 ## Purpose
 
-Define standardized fluid import, circulation, replenishment, extraction, draining, isolation, and service interfaces for CD35 wet stages.
+Define standardized fluid import, circulation, replenishment, extraction, draining, isolation, level management, and service interfaces for CD35 wet stages.
 
 ## Normative requirements
 
@@ -42,6 +42,11 @@ Define standardized fluid import, circulation, replenishment, extraction, draini
 - **FLD-016** — Pumps and valves that are expected wear/failure items SHALL be replaceable independently of the wet bath tank where practical.
 - **FLD-017** — Drain and waste routing SHALL prevent a normal service operation from mixing incompatible process solutions unintentionally.
 - **FLD-018** — Fluid-system service SHALL comply with `PBR-020` through `PBR-026`.
+- **FLD-019** — A stage whose pump, heater, process quality, or safety can be compromised by low liquid level SHALL provide a level-valid signal before those functions are enabled.
+- **FLD-020** — A stage where overflow can damage equipment, mix chemistry, or create a safety risk SHALL provide either direct high-level detection or a validated passive overflow path with detectable containment.
+- **FLD-021** — Repeated level sensing SHOULD use a standardized replaceable sensor cartridge or common sensor family with a documented WBM receiving interface.
+- **FLD-022** — The wet section SHALL provide containment or drainage geometry such that foreseeable leakage is directed away from dry electrical assemblies and toward an observable or instrumented leak-detection area.
+- **FLD-023** — Leak detection SHALL be treated as machine/chassis infrastructure rather than requiring a dedicated top-level process module unless later architecture provides a technical reason otherwise.
 
 ## Standard port roles
 
@@ -60,17 +65,20 @@ The final product may combine compatible roles, but a combined port must be expl
 
 ## Current design direction
 
-The preferred architecture keeps the wet bath relatively passive and moves common failure/service components into dry-side `FSM` assemblies. A candidate arrangement is:
+The preferred architecture keeps the wet bath relatively passive and moves common failure/service components into dry-side `FSM` assemblies:
 
 ```text
 WET BATH MODULE
   SUCTION o====[quick disconnect]====[FSM pump/filter]====o RETURN
       |
       +---- DRAIN o====[service coupling]====> waste/storage
-      +---- REPL  o<===[metering module]
+      +---- REPL  o<===[metering cartridge]
+      +---- level sensor cartridge / interface
+
+wet-zone containment tray ----> leak sensor / visible drain area
 ```
 
-For routine-disconnect chemistry lines, chemically resistant non-spill polypropylene coupling families are commercially available. CPC's NSH/NS4 families are examples of the *component class* being considered, not selected CD35 parts. Their suitability still requires chemistry, seal, temperature, flow, pressure, cost, and availability validation.
+For routine-disconnect chemistry lines, chemically resistant non-spill polypropylene coupling families are commercially available. CPC's NSH/NS4 families remain examples of the *component class* being considered, not selected CD35 parts. Their suitability still requires chemistry, seal, temperature, flow, pressure, cost, and availability validation.
 
 Manufacturer references:
 
@@ -89,6 +97,22 @@ Candidate duty split:
 
 These technologies remain candidates, not frozen selections.
 
+## Level sensing direction
+
+The machine should initially distinguish at least these logical conditions where applicable:
+
+```text
+LOW / NOT SAFE TO RUN
+NORMAL / PROCESS VALID
+HIGH / OVERFLOW RISK
+```
+
+This does not require three physical sensors. Float, conductive, capacitive, optical, pressure-derived, or other methods may satisfy the state model if validated against the selected chemistry, foam, deposits, temperature, and cleaning regime.
+
+## Leak detection direction
+
+A shallow wet-zone containment tray or equivalent drainage structure with one or more commodity liquid sensors is the preferred first architecture. The design goal is not to identify every droplet source automatically; it is to detect liquid where liquid should not normally accumulate and to keep it away from energized dry-side hardware.
+
 ## Validation
 
 Fluid-interface validation shall eventually include:
@@ -101,6 +125,9 @@ Fluid-interface validation shall eventually include:
 - pump flow repeatability;
 - replenishment metering accuracy;
 - hose and seal service life;
+- low/normal/high level-state testing where applicable;
+- level-sensor fouling and replacement testing;
+- containment and leak-sensor fault testing;
 - contamination and cross-connection fault testing;
 - module removal/reinstallation repeatability.
 
@@ -112,5 +139,6 @@ Fluid-interface validation shall eventually include:
 - Circulation pump technology and target flow.
 - Filter requirement and micron rating per stage.
 - Replenishment pump technology and calibration method.
-- Leak detection strategy.
+- Level-sensor technology and WBM mounting standard.
+- Leak-sensor technology, quantity, and containment geometry.
 - Whether `FILL` and `RETURN` can share a port in the first prototype.
