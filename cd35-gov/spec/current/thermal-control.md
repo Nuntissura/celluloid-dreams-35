@@ -12,7 +12,6 @@ owners:
   - unassigned
 depends_on:
   - module-platform
-  - wet-process-modules
   - controls-and-software
 supersedes: null
 ---
