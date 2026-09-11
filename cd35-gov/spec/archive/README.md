@@ -5,7 +5,7 @@ This directory contains immutable snapshots of superseded CD35 specification bas
 Archive directories use semantic-style version names:
 
 ```text
-spec-archive/
+archive/
 ├── README.md
 ├── v0.1.0/
 ├── v0.2.0/
