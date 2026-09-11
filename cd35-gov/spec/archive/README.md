@@ -17,5 +17,6 @@ A baseline is copied here **only when it is being superseded**. Archived files a
 ## Archived baselines
 
 - `v0.1.0/` — initial structured concept baseline; superseded by v0.2.0 module-platform architecture.
+- `v0.2.0/` — standardized TDM/TSM/FSM/WBM module-platform baseline; superseded by v0.3.0 TRM and thermal-conditioning architecture.
 
 See [`../../../codex/spec-workflow.md`](../../../codex/spec-workflow.md) for the authoritative promotion and archive procedure.
