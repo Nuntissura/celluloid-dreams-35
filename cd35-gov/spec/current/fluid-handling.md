@@ -12,7 +12,6 @@ owners:
   - unassigned
 depends_on:
   - module-platform
-  - safety-and-compliance
 supersedes: null
 ---
 
@@ -112,6 +111,14 @@ This does not require three physical sensors. Float, conductive, capacitive, opt
 ## Leak detection direction
 
 A shallow wet-zone containment tray or equivalent drainage structure with one or more commodity liquid sensors is the preferred first architecture. The design goal is not to identify every droplet source automatically; it is to detect liquid where liquid should not normally accumulate and to keep it away from energized dry-side hardware.
+
+## Interfaces
+
+- `module-platform` defines FSM and service-cartridge commonization rules.
+- `wet-process-modules` provides WBM fluid and level-sensor receiving interfaces.
+- `thermal-control` relies on circulation where required for thermal uniformity.
+- `controls-and-software` consumes level/leak state and commands pumps/valves.
+- `safety-and-compliance` defines the protective response and containment expectations.
 
 ## Validation
 
