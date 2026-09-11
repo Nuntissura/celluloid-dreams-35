@@ -5,8 +5,8 @@ project: CD35
 document_type: spec-topic
 status: current
 maturity: concept
-last_promoted_in: "0.2.0"
-topic_revision: 1
+last_promoted_in: "0.3.0"
+topic_revision: 2
 last_updated: 2026-09-11
 owners:
   - unassigned
@@ -38,17 +38,36 @@ This topic implements the cross-project modularity and repairability rules in `P
 - **MOD-011** — Custom mechanical adapters MAY be used to connect off-the-shelf components to the platform, but the adapter SHALL be documented and SHALL NOT unnecessarily make the commercial component proprietary to CD35.
 - **MOD-012** — A module class SHALL identify which internal subcomponents are expected to be replaceable independently and which are replaced only at module level.
 - **MOD-013** — Interchangeability of a module class SHALL be validated with independently assembled examples before the interface is considered frozen.
+- **MOD-014** — Wet transport geometry SHALL be represented by a standardized `TRM` Transport Rack Module service boundary separate from the dry-side `TDM` drive source and the `WBM` bath vessel.
+- **MOD-015** — Standardized sensing functions that do not justify a top-level module class MAY be implemented as documented replaceable service cartridges, provided their mechanical, electrical, calibration, and compatibility interfaces are defined.
 
 ## Initial module classes
 
 | Class | Working name | Service boundary | Intended contents |
 |---|---|---|---|
 | `TDM` | Transport Drive Module | Dry-side motion source | motor, gearbox if required, encoder, output coupling, local protection/connector |
-| `TSM` | Thermal Service Module | Replaceable thermal hardware | heater interface, temperature sensing interface, independent thermal protection; exact packaging TBD |
+| `TRM` | Transport Rack Module | Wet film-path service unit | rollers, guides, sprockets if used, passive gears/shafts, rack frame, drive receiving interface |
+| `TSM` | Thermal Service Module | Replaceable thermal-conditioning hardware | heat input, temperature sensing, independent thermal protection, and heat-rejection interface where required |
 | `FSM` | Fluid Service Module | Dry/service-side fluid movement | pump/valve/filter or metering hardware, replaceable tubing/ports as applicable |
-| `WBM` | Wet Bath Module | Chemistry vessel and local wet film path | tank, removable transport rack/guide, fluid ports, thermal receiving interface, drain geometry |
+| `WBM` | Wet Bath Module | Chemistry vessel | tank, fluid ports, thermal receiving interface, drain geometry, TRM receiving interface |
 
 These class names define boundaries, not final dimensions or vendor parts.
+
+## Service hierarchy
+
+Top-level modules should not proliferate merely because a replaceable component exists. Common wear or sensing functions can be standardized as submodules or service cartridges inside a module family.
+
+Examples include:
+
+- level-sensor cartridge;
+- temperature-probe cartridge;
+- heater cartridge;
+- pump cartridge;
+- filter cartridge;
+- replenishment-metering cartridge;
+- thermal cutoff/protection device.
+
+A service cartridge still requires a documented interface when it is production-intended, but it does not automatically become a new top-level machine subsystem.
 
 ## Interface layers
 
@@ -72,6 +91,10 @@ The platform should minimize the number of connector families and power classes.
 
 Fluid interfaces are defined in `fluid-handling.md`. The module platform requires role identification and service disconnectability but does not yet freeze a coupling vendor or size.
 
+### Thermal
+
+The `TSM` interface represents **thermal conditioning**, not only heating. The interface shall support the required heat input and temperature measurement functions and shall not preclude later heat rejection or cooling if environmental testing demonstrates that it is necessary.
+
 ### Data and identity
 
 Machine-readable module identification is desirable for incompatible module/revision detection. EEPROM, one-wire identity, NFC/RFID, controller-node identity, and keyed passive coding remain candidates.
@@ -83,7 +106,7 @@ A module interface is not considered validated until tests demonstrate:
 - repeatable mounting and removal;
 - correct alignment after replacement;
 - no unintended cross-connection;
-- required electrical/fluid performance;
+- required electrical/fluid/thermal performance;
 - safe fault behavior;
 - replacement without damage to adjacent modules;
 - successful use of a second independently assembled module.
@@ -93,7 +116,8 @@ A module interface is not considered validated until tests demonstrate:
 - Common mechanical rail/datum system.
 - Standard electrical voltage classes and connectors.
 - Machine-readable module identity method.
-- TDM output coupling geometry.
-- TSM physical architecture.
+- TDM-to-TRM output coupling geometry.
+- TRM rack datum and interchangeability standard.
+- TSM conductive thermal-interface geometry and optional heat-rejection interface.
 - FSM pump/valve cartridge geometry.
 - Maximum module replacement-time targets.
