@@ -17,37 +17,37 @@ This file defines how the CD35 engineering specification is structured, changed,
 When project documents conflict, use this precedence order:
 
 1. `codex.md` — specification governance and repository authority.
-2. `cd35-gov/spec/spec-current/index.md` — current specification baseline and topic map.
-3. Topic files in `cd35-gov/spec/spec-current/` — authoritative requirements and design decisions for their topic.
+2. `cd35-gov/spec/current/index.md` — current specification baseline and topic map.
+3. Topic files in `cd35-gov/spec/current/` — authoritative requirements and design decisions for their topic.
 4. Archived specifications — historical reference only.
 5. Issues, pull-request discussion, notes, chat transcripts, sketches, and other working material — informative unless promoted into the current specification.
 
-A design idea is not authoritative merely because it appears in discussion. It becomes part of the specification only when it is represented in `spec-current` and promoted according to this file.
+A design idea is not authoritative merely because it appears in discussion. It becomes part of the specification only when it is represented in `current` and promoted according to this file.
 
 ## 2. Directory model
 
 ```text
 cd35-gov/
 └── spec/
-    ├── spec-current/
+    ├── current/
     │   ├── index.md
     │   └── <topic>.md
-    └── spec-archive/
+    └── archive/
         ├── README.md
         ├── v0.1.0/
         ├── v0.2.0/
         └── ...
 ```
 
-### `spec-current`
+### `current`
 
-`spec-current` is the single canonical active specification on the default branch.
+`current` is the single canonical active specification on the default branch.
 
-Edits to `spec-current` on a feature branch are proposals until merged. Once merged, the resulting contents are authoritative.
+Edits to `current` on a feature branch are proposals until merged. Once merged, the resulting contents are authoritative.
 
-### `spec-archive`
+### `archive`
 
-`spec-archive` contains full snapshots of earlier promoted specifications. Archived snapshots are immutable. Never edit an archived snapshot to correct wording or synchronize it with a newer design.
+`archive` contains full snapshots of earlier promoted specifications. Archived snapshots are immutable. Never edit an archived snapshot to correct wording or synchronize it with a newer design.
 
 If an archived specification contains an error, correct the current specification and document the change in the new baseline.
 
@@ -66,7 +66,7 @@ Examples:
 - `v0.2.1` — clarifies a sensor tolerance without changing architecture.
 - `v1.0.0` — first engineering baseline considered sufficiently defined for implementation/prototype control.
 
-The current baseline version is declared in `spec-current/index.md`.
+The current baseline version is declared in `current/index.md`.
 
 ## 4. Topic-file rule
 
@@ -179,10 +179,10 @@ Do not present an unverified engineering assumption as a requirement or establis
 To add a topic:
 
 1. Create a branch for the proposed specification change.
-2. Add `<topic>.md` under `cd35-gov/spec/spec-current/`.
+2. Add `<topic>.md` under `cd35-gov/spec/current/`.
 3. Add complete YAML frontmatter.
 4. Assign a stable topic slug and requirement-ID prefix.
-5. Add the topic to `spec-current/index.md`.
+5. Add the topic to `current/index.md`.
 6. Document dependencies on other topics.
 7. Add normative requirements only where the requirement is sufficiently defined to be testable or reviewable.
 8. Put unresolved choices under `Open questions` rather than inventing precision.
@@ -210,14 +210,14 @@ Before promoting baseline `vNEW` from current baseline `vOLD`:
 
 1. Ensure the proposal branch contains all intended topic and index changes.
 2. Review the changed requirements for internal contradictions and unresolved interface mismatches.
-3. Create a complete, byte-for-byte snapshot of the **pre-promotion** `spec-current/` tree at:
+3. Create a complete, byte-for-byte snapshot of the **pre-promotion** `current/` tree at:
 
    ```text
-   cd35-gov/spec/spec-archive/vOLD/
+   cd35-gov/spec/archive/vOLD/
    ```
 
 4. Do not modify the copied snapshot after it is created.
-5. Update `spec-current/index.md` to declare `vNEW`.
+5. Update `current/index.md` to declare `vNEW`.
 6. Ensure materially modified topic files declare `last_promoted_in: "NEW"` and increment their `topic_revision`.
 7. Record a concise promotion summary in the index.
 8. Merge the proposal.
@@ -232,17 +232,17 @@ For the first baseline, there is no predecessor to archive. `v0.1.0` may therefo
 
 Archived specification directories:
 
-- MUST be complete snapshots of `spec-current` at the time they ceased to be current;
+- MUST be complete snapshots of `current` at the time they ceased to be current;
 - MUST use a version directory such as `v0.1.0`;
 - MUST NOT be edited after archival;
 - MUST NOT be used as the source of current requirements when a newer current specification exists;
 - MAY be cited to explain historical design decisions.
 
-Do not store drafts in `spec-archive`. Git history and proposal branches/PRs already preserve draft evolution.
+Do not store drafts in `archive`. Git history and proposal branches/PRs already preserve draft evolution.
 
 ## 12. Index rules
 
-`spec-current/index.md` is the entry point to the active specification. It must contain:
+`current/index.md` is the entry point to the active specification. It must contain:
 
 - project name and code;
 - current baseline version;
@@ -291,4 +291,4 @@ Use these terms consistently unless the specification explicitly redefines them:
 - **intake** — daylight cassette-loading and film-acquisition subsystem.
 - **crossover** — transition between wet stages, including carryover control.
 - **baseline** — a promoted, versioned specification state.
-- **current specification** — the contents of `spec-current` on the default branch.
+- **current specification** — the contents of `current` on the default branch.
