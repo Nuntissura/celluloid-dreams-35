@@ -5,8 +5,8 @@ project: CD35
 document_type: spec-topic
 status: current
 maturity: concept
-last_promoted_in: "0.1.0"
-topic_revision: 1
+last_promoted_in: "0.3.0"
+topic_revision: 2
 last_updated: 2026-09-11
 owners:
   - unassigned
@@ -14,6 +14,7 @@ depends_on:
   - system-architecture
   - thermal-control
   - controls-and-software
+  - fluid-handling
 supersedes: null
 ---
 
@@ -35,18 +36,25 @@ Define safety constraints for a machine combining photographic chemistry, heated
 - **SAF-008** — The machine SHALL provide a controlled response to leak detection where leakage could reach electrical or mechanically hazardous areas.
 - **SAF-009** — Required ventilation and operator exposure controls SHALL be determined from the safety data and technical requirements of the selected chemistry.
 - **SAF-010** — Applicable product-safety, electrical, EMC, environmental, and workplace requirements for the intended sales/use region SHALL be identified before production hardware is frozen.
+- **SAF-011** — The wet section SHALL include secondary containment, drainage, or equivalent geometry capable of keeping foreseeable service leakage away from energized dry-side assemblies long enough for detection and controlled response.
+- **SAF-012** — A low-liquid condition SHALL disable any heater, pump, or other function for which dry or partially dry operation creates a credible thermal, mechanical, or process hazard.
+- **SAF-013** — Optional heat-rejection or cooling hardware SHALL fail in a manner that does not defeat independent over-temperature protection.
+- **SAF-014** — A shared thermal backplane, if adopted, SHALL be analyzed for fault propagation so a single thermal-control failure cannot silently overheat multiple chemistry stages beyond their validated safe limits.
 
 ## Current design direction
 
 Safety should be layered:
 
 1. physical separation of wet and electrical zones;
-2. containment and drainage;
-3. hardware protection such as fuses and thermal cut-outs;
-4. door/cover interlocks;
-5. software monitoring and diagnostics.
+2. wet-zone containment and deliberate drainage;
+3. level and leak sensing where useful;
+4. hardware protection such as fuses and thermal cut-outs;
+5. door/cover interlocks;
+6. software monitoring and diagnostics.
 
 Software alarms are supplementary controls, not substitutes for basic physical protection.
+
+A shallow service/containment tray beneath the wet modules is the preferred initial leak-management architecture. Exact volume, drainage, sensor placement, and chemical compatibility remain TBD.
 
 ## Open questions
 
@@ -56,3 +64,4 @@ Software alarms are supplementary controls, not substitutes for basic physical p
 - Required emergency-stop behavior.
 - Ventilation requirements for selected chemistry and installation environment.
 - Waste-chemistry handling requirements.
+- Required containment volume and whether containment is stage-local or common across the wet section.
