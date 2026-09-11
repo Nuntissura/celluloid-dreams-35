@@ -27,16 +27,16 @@ The initial target is a low-to-medium-volume **35 mm C-41 production processor**
 ├── codex.md
 └── cd35-gov/
     └── spec/
-        ├── spec-current/
+        ├── current/
         │   ├── index.md
         │   └── <topic>.md
-        └── spec-archive/
+        └── archive/
             └── <version>/
 ```
 
-`cd35-gov/spec/spec-current/` is the canonical active specification.
+`cd35-gov/spec/current/` is the canonical active specification.
 
-`cd35-gov/spec/spec-archive/` contains immutable snapshots of previously promoted specifications.
+`cd35-gov/spec/archive/` contains immutable snapshots of previously promoted specifications.
 
 The rules for creating, changing, promoting, and archiving specifications are defined in [`codex.md`](./codex.md). That file is the project authority for specification governance.
 
