@@ -12,7 +12,6 @@ owners:
   - unassigned
 depends_on:
   - system-architecture
-  - serviceability
 supersedes: null
 ---
 
