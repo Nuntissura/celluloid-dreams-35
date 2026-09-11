@@ -4,20 +4,30 @@
 
 Celluloid Dreams 35 is an open engineering project for a modern, modular, daylight-operated 35 mm film processing machine.
 
-The initial target is a low-to-medium-volume **35 mm C-41 production processor** that does not require a darkroom and is designed around standardized, field-replaceable modules rather than proprietary monolithic assemblies.
+The initial target is a low-to-medium-volume **35 mm C-41 production processor** designed around standardized, field-replaceable modules and readily replaceable parts rather than proprietary monolithic assemblies.
+
+## Current engineering focus
+
+Machine shape is deliberately deferred. The current priority is validating standardized service interfaces for:
+
+- **TDM** — Transport Drive Module: dry-side motor/gearbox/encoder and drive coupling;
+- **TSM** — Thermal Service Module: replaceable heating, sensing, and thermal protection;
+- **FSM** — Fluid Service Module: circulation, transfer, replenishment, drain/service hardware;
+- **WBM** — Wet Bath Module: chemistry vessel and local wet film path receiving TDM/TSM/FSM services.
+
+The design rule is simple: repeated functions converge on common modules or part families, and a unique part requires a technical reason.
 
 ## Core design intent
 
 - 35 mm film only for the first machine.
-- Daylight loading: the operator inserts a film cassette; exposed film remains inside a light-tight path until it is safe to expose.
+- Daylight loading with a light-tight exposed-film path.
 - Production-oriented workflow rather than hobby batch processing.
-- Interchangeable wet-process modules for developer, bleach, fixer, wash, and final rinse functions.
-- Standardized transport and motor modules.
-- Precision temperature sensing and control where the chemistry requires it.
-- Fast draining and chemistry changes using serviceable fluid connections.
-- Components that routinely contact chemistry must be easy to remove, clean, replace, or exchange.
-- Commodity motors, sensors, pumps, heaters, and control hardware should be preferred where technically appropriate.
-- The machine should be repairable without dependence on obsolete proprietary electronics.
+- Commodity/off-the-shelf motors, pumps, sensors, heaters, valves, connectors, and controls where technically appropriate.
+- Standardized module interfaces so failed assemblies can be exchanged before component-level repair.
+- Wet bath vessels kept as passive and serviceable as process performance permits.
+- Fast, controlled fluid filling/draining using serviceable and error-resistant connections.
+- Chemistry-contact components accessible for cleaning or replacement.
+- No dependence on obsolete proprietary electronics or vendor-only service software where avoidable.
 
 ## Repository structure
 
@@ -25,6 +35,12 @@ The initial target is a low-to-medium-volume **35 mm C-41 production processor**
 /
 ├── README.md
 ├── codex.md
+├── codex/
+│   ├── README.md
+│   ├── authority.md
+│   ├── repository-behavior.md
+│   ├── spec-workflow.md
+│   └── product-build-rules.md
 └── cd35-gov/
     └── spec/
         ├── current/
@@ -34,19 +50,10 @@ The initial target is a low-to-medium-volume **35 mm C-41 production processor**
             └── <version>/
 ```
 
-`cd35-gov/spec/current/` is the canonical active specification.
+[`codex.md`](./codex.md) is the stable project-authority entry point. Normative codex rules live under [`codex/`](./codex/) and have stable IDs such as `AUTH-*`, `REP-*`, `WF-*`, and `PBR-*`.
 
-`cd35-gov/spec/archive/` contains immutable snapshots of previously promoted specifications.
-
-The rules for creating, changing, promoting, and archiving specifications are defined in [`codex.md`](./codex.md). That file is the project authority for specification governance.
+[`cd35-gov/spec/current/index.md`](./cd35-gov/spec/current/index.md) is the canonical active engineering specification. `cd35-gov/spec/archive/` contains immutable snapshots of superseded baselines.
 
 ## Current project phase
 
-The project is in **concept / architecture definition**. Dimensions, throughput, chemistry volumes, transport geometry, component selection, and regulatory requirements are not yet frozen.
-
-The current specification should therefore distinguish clearly between:
-
-- accepted requirements;
-- current design direction;
-- hypotheses requiring validation;
-- unresolved engineering questions.
+The project is in **concept / module architecture definition**. Transport mechanism, chemistry selection, dimensions, throughput, bath volumes, coupling families, pump types, heater architecture, and controller platform are not yet frozen. Values become requirements only after evidence and validation.

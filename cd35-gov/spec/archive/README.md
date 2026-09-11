@@ -12,6 +12,10 @@ archive/
 └── ...
 ```
 
-A baseline is copied here **only when it is being superseded**. The first current baseline therefore has no archive copy until the next baseline is promoted.
+A baseline is copied here **only when it is being superseded**. Archived files are historical records and must not be edited after creation.
 
-Archived files are historical records and must not be edited after creation. See [`../../../codex.md`](../../../codex.md) for the authoritative promotion and archive procedure.
+## Archived baselines
+
+- `v0.1.0/` — initial structured concept baseline; superseded by v0.2.0 module-platform architecture.
+
+See [`../../../codex/spec-workflow.md`](../../../codex/spec-workflow.md) for the authoritative promotion and archive procedure.
